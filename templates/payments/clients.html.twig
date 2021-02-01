@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Клиенты{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {% include "/menu/menu.html.twig" %}
+
+    <h2>Клиенты (последний платеж)</h2>
+    <div width="100%">
+        <table>
+            <tr>
+                <th>Клиент</th>
+                <th>Последний платеж</th>
+            </tr>
+            {% for client in clients %}
+                {% set client_count = client.payments|length %}
+                <tr>
+                    <td>{{ client.name }}</td>
+                    {% if client_count > 0 %}
+                        <td>{{ client.payments[client_count - 1].amount }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
